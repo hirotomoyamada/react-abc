@@ -3,6 +3,7 @@
 import type { ChangeEvent } from "react"
 import type { Pokemon, PokemonData } from "../util"
 import {
+  Box,
   Checkbox,
   Grid,
   Heading,
@@ -53,14 +54,21 @@ function Item({ id, name, onToggle }: ItemProps) {
   console.log("render", id)
 
   return (
-    <VStack as="article" borderRadius="md" borderWidth="1px" p="md">
-      <Checkbox checked={checked} onChange={onChange}>
-        <Heading size="sm" flex="1" lineClamp={1} wordBreak="break-all">
-          {title}
-        </Heading>
-      </Checkbox>
+    <Box as="article" borderRadius="md" borderWidth="1px">
+      <VStack as="label" htmlFor={id.toString()} p="md">
+        <Checkbox
+          id={id.toString()}
+          checked={checked}
+          labelProps={{ as: "span" }}
+          onChange={onChange}
+        >
+          <Heading size="sm" flex="1" lineClamp={1} wordBreak="break-all">
+            {title}
+          </Heading>
+        </Checkbox>
 
-      <Image src={src} alt={title} h="auto" w="full" />
-    </VStack>
+        <Image src={src} alt={title} h="auto" w="full" />
+      </VStack>
+    </Box>
   )
 }
