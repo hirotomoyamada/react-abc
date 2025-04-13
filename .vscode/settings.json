@@ -1,0 +1,6 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.options": {
+    "flags": ["unstable_ts_config"]
+  }
+}
