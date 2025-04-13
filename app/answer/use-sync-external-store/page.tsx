@@ -59,7 +59,11 @@ function A({ children }: AProps) {
 interface BProps {}
 
 function B({}: BProps) {
-  const state = useSyncExternalStore(store.subscribe, store.getSnapshot)
+  const state = useSyncExternalStore(
+    store.subscribe,
+    store.getSnapshot,
+    store.getSnapshot,
+  )
 
   console.log("render B")
 
