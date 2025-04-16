@@ -1,7 +1,6 @@
 "use client"
 
-import type { ChangeEvent } from "react"
-import type { Pokemon, PokemonData } from "../util"
+import type { Pokemon, PokemonData } from "../../util"
 import {
   Box,
   Checkbox,
@@ -11,15 +10,15 @@ import {
   toTitleCase,
   VStack,
 } from "@yamada-ui/react"
-import { useCallback, useState } from "react"
-import { getPokemonOfficialArtworkUrl } from "../util"
+import { useSyncExternalStore } from "react"
+import { getPokemonOfficialArtworkUrl } from "../../util"
+import { store } from "./store"
 
 export interface ListProps {
   data: PokemonData
-  onToggle: (checked: boolean, id: number) => void
 }
 
-export function List({ data, onToggle }: ListProps) {
+export function List({ data }: ListProps) {
   return (
     <Grid
       gap="md"
@@ -27,7 +26,7 @@ export function List({ data, onToggle }: ListProps) {
       w="full"
     >
       {Object.entries(data).map(function ([id, data]) {
-        return <Item id={id} key={id} {...data} onToggle={onToggle} />
+        return <Item id={id} key={id} {...data} />
       })}
     </Grid>
   )
@@ -35,20 +34,15 @@ export function List({ data, onToggle }: ListProps) {
 
 interface ItemProps extends Pokemon {
   id: number
-  onToggle: (checked: boolean, id: number) => void
 }
 
-function Item({ id, name, onToggle }: ItemProps) {
+function Item({ id, name }: ItemProps) {
   const title = toTitleCase(name)
   const src = getPokemonOfficialArtworkUrl(id)
-  const [checked, setChecked] = useState(false)
-
-  const onChange = useCallback(
-    (ev: ChangeEvent<HTMLInputElement>) => {
-      setChecked(ev.target.checked)
-      onToggle(ev.target.checked, id)
-    },
-    [id, onToggle],
+  const checked = useSyncExternalStore(
+    store.subscribe,
+    store.getSnapshotWithId(id),
+    store.getSnapshotWithId(id),
   )
 
   console.log("render", id)
@@ -60,7 +54,11 @@ function Item({ id, name, onToggle }: ItemProps) {
           id={id.toString()}
           checked={checked}
           labelProps={{ as: "span" }}
-          onChange={onChange}
+          onChange={(ev) =>
+            store.setState((prevState) => {
+              return { ...prevState, [id]: ev.target.checked }
+            })
+          }
         >
           <Heading size="sm" flex="1" lineClamp={1} wordBreak="break-all">
             {title}

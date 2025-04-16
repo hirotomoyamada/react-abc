@@ -1,4 +1,4 @@
-import { getPokemonData } from "../util"
+import { getPokemonData } from "../../util"
 import { Form } from "./form"
 
 async function Page() {

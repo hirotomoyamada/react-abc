@@ -1,7 +1,7 @@
 "use client"
 
 import type { Dispatch, SetStateAction } from "react"
-import type { PokemonData } from "../util"
+import type { PokemonData } from "../../util"
 import { useCallback, useRef } from "react"
 import { List } from "./list"
 import { SubmitButton } from "./submit-button"

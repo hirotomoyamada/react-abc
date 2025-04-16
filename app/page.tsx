@@ -3,7 +3,7 @@ import { ButtonGroup, Heading, VStack } from "@yamada-ui/react"
 
 function Page() {
   return (
-    <VStack maxW="xs">
+    <VStack maxW="md">
       <Heading as="h2" size="md">
         Answer
       </Heading>
@@ -29,8 +29,16 @@ function Page() {
       <ButtonGroup as="nav" flexDirection="column" gap="md">
         <NextLinkButton href="/example/basic">Basic</NextLinkButton>
 
-        <NextLinkButton href="/example/best-practices">
-          Best Practices
+        <NextLinkButton href="/example/best-practices/use-imperative-handle">
+          Best Practices with useImperativeHandle
+        </NextLinkButton>
+
+        <NextLinkButton href="/example/best-practices/use-sync-external-store">
+          Best Practices with useSyncExternalStore
+        </NextLinkButton>
+
+        <NextLinkButton href="/example/best-practices/zustand">
+          Best Practices with Zustand
         </NextLinkButton>
       </ButtonGroup>
     </VStack>
